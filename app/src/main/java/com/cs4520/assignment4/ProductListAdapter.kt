@@ -22,6 +22,7 @@ class ProductListAdapter(private val dataset: List<Product>): RecyclerView.Adapt
             if (p.expirationDate == null) {
                 dateText.visibility = View.INVISIBLE
             } else {
+                dateText.visibility = View.VISIBLE
                 dateText.text = p.expirationDate
             }
             priceText.text = "$ ${p.price}"
