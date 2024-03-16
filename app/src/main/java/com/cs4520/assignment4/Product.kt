@@ -1,28 +1,13 @@
 package com.cs4520.assignment4
 
-sealed class Product(
-    open val name: String,
-    open val expirationDate: String?,
-    open val price: Int) {
-    abstract fun getBackgroundImg(): Int
-}
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class Equipment(
-    override val name: String,
-    override val expirationDate: String?,
-    override val price: Int
-) : Product(name, expirationDate, price) {
-    override fun getBackgroundImg(): Int {
-        return R.drawable.equipment
-    }
-}
+@Entity(tableName = "items")
+data class Product (
+    @PrimaryKey val name: String,
+    val type: String,
+    val expDate: String?,
+    val price: String
+)
 
-data class Food(
-    override val name: String,
-    override val expirationDate: String?,
-    override val price: Int
-) : Product(name, expirationDate, price) {
-    override fun getBackgroundImg(): Int {
-        return R.drawable.food
-    }
-}
