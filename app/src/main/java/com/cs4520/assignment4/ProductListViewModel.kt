@@ -8,12 +8,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class ProductListViewModel(application: Application) : AndroidViewModel(application) {
-    private val repo: ProductRepo = ProductRepo(application.applicationContext)
+    private val repo: ProductRepo = ProductRepo()
 
     private val items = MutableLiveData<List<Product>>()
     val products: LiveData<List<Product>> = items
-
-    val isLoading = MutableLiveData<Boolean>(true)
+    val loading = MutableLiveData<Boolean>(true)
 
     val noProducts = MutableLiveData<Boolean>(false)
 
@@ -21,17 +20,17 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
 
         viewModelScope.launch {
             try {
-                val data = repo.fetchAll()
-                if (data.length == 0) {
-                    noProducts.postValue(true)
-                    isLoading.postValue(false)
+                val data = listOf<Product>()
+//                val data = repo.fetchAll()
+                if (data.size == 0) {
+                    noProducts.value = true
+                    loading.value = false
                 } else {
-                    isLoading.postValue(false)
-                    items.postValue(data)
+                    loading.value = false
+                    items.value = data
                 }
             } catch (e: Error) {
-                isLoading.postValue(false)
-                noProducts.postValue(false)
+
             }
         }
     }
